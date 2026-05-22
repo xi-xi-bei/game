@@ -1,18 +1,143 @@
 'use client';
 
 import { useGame } from '@/lib/game-context';
-import { DISEASE_INFO, ENDING_CONFIG, type EndingType } from '@/lib/game-types';
+import { DISEASE_INFO, ENDING_CONFIG, type DiseaseType, type Perspective } from '@/lib/game-types';
 import { useEffect, useState, useCallback } from 'react';
 
 // ========== 开篇视角选择页 ==========
 function WelcomeScreen() {
   const { startGame } = useGame();
   const [mounted, setMounted] = useState(false);
+  const [selectedPerspective, setSelectedPerspective] = useState<Perspective | null>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  const handleSelectDisease = (disease: DiseaseType) => {
+    if (selectedPerspective) {
+      startGame(selectedPerspective, disease);
+    }
+  };
+
+  // 疾病选择页
+  if (selectedPerspective) {
+    const isFemale = selectedPerspective === 'female';
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8" style={{ backgroundColor: '#FEFAF6' }}>
+        <div
+          className={`max-w-2xl w-full text-center transition-all duration-700 ${
+            mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`}
+        >
+          <button
+            onClick={() => setSelectedPerspective(null)}
+            className="mb-6 text-sm font-medium cursor-pointer hover:opacity-70 transition-opacity"
+            style={{ color: '#636E72' }}
+          >
+            ← 返回视角选择
+          </button>
+
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <div className="w-10 h-10 rounded-full flex items-center justify-center text-lg"
+              style={{ backgroundColor: isFemale ? '#FFF0EC' : '#ECF3FF' }}>
+              {isFemale ? '♀' : '♂'}
+            </div>
+            <h2 className="text-xl font-bold" style={{ color: '#2D3436' }}>
+              {isFemale ? '女性育龄视角' : '男性育龄视角'}
+            </h2>
+          </div>
+
+          <p className="text-sm mb-8" style={{ color: '#636E72' }}>
+            选择你想体验的疾病剧情，了解不同疾病的防护知识
+          </p>
+
+          <div className="space-y-4">
+            {/* 艾滋病 */}
+            <button
+              onClick={() => handleSelectDisease('hiv')}
+              className="group w-full rounded-2xl p-5 text-left transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
+              style={{ backgroundColor: '#FFFFFF', border: '2px solid #FFE0D6' }}
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold"
+                  style={{ backgroundColor: '#FFF0EC', color: '#E76F51' }}>
+                  艾
+                </div>
+                <div>
+                  <h3 className="font-bold text-base" style={{ color: '#2D3436' }}>艾滋病（HIV感染）</h3>
+                </div>
+              </div>
+              <p className="text-sm leading-relaxed ml-12" style={{ color: '#636E72' }}>
+                {isFemale
+                  ? '高危接触后感染HIV，面对72小时阻断抉择。侧重母婴阻断、U=U、孕期抗病毒治疗。'
+                  : '出差那晚的失误，让你面对HIV阳性的现实。侧重男性传播责任、U=U、家庭防护。'}
+              </p>
+              <div className="flex items-center gap-2 mt-3 ml-12">
+                <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: '#FFF0EC', color: '#E76F51' }}>72h阻断药</span>
+                <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: '#F0FAF4', color: '#52B788' }}>U=U</span>
+                <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: '#EBF3FF', color: '#5B9BD5' }}>母婴阻断98%+</span>
+              </div>
+            </button>
+
+            {/* 梅毒 */}
+            <button
+              onClick={() => handleSelectDisease('syphilis')}
+              className="group w-full rounded-2xl p-5 text-left transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
+              style={{ backgroundColor: '#FFFFFF', border: '2px solid #E9C46A40' }}
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold"
+                  style={{ backgroundColor: '#FFFBEB', color: '#B8860B' }}>
+                  梅
+                </div>
+                <div>
+                  <h3 className="font-bold text-base" style={{ color: '#2D3436' }}>梅毒</h3>
+                </div>
+              </div>
+              <p className="text-sm leading-relaxed ml-12" style={{ color: '#636E72' }}>
+                {isFemale
+                  ? '隐匿的梅毒感染，不痛不痒却危害胎儿。侧重先天梅毒预防、夫妻同治、孕期筛查。'
+                  : '无症状携带梅毒，不知不觉传给妻子。侧重男性筛查责任、夫妻同治、先天梅毒预防。'}
+              </p>
+              <div className="flex items-center gap-2 mt-3 ml-12">
+                <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: '#FFFBEB', color: '#B8860B' }}>早期可100%治愈</span>
+                <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: '#FFF0EC', color: '#E76F51' }}>夫妻同治</span>
+              </div>
+            </button>
+
+            {/* 乙肝 */}
+            <button
+              onClick={() => handleSelectDisease('hepatitisB')}
+              className="group w-full rounded-2xl p-5 text-left transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
+              style={{ backgroundColor: '#FFFFFF', border: '2px solid #D4F0EA' }}
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold"
+                  style={{ backgroundColor: '#E8F5E9', color: '#2A9D8F' }}>
+                  乙
+                </div>
+                <div>
+                  <h3 className="font-bold text-base" style={{ color: '#2D3436' }}>乙肝（乙型肝炎）</h3>
+                </div>
+              </div>
+              <p className="text-sm leading-relaxed ml-12" style={{ color: '#636E72' }}>
+                {isFemale
+                  ? '乙肝携带者的备孕之路，母婴阻断是关键。侧重乙肝疫苗、母婴三联阻断、喂养指导。'
+                  : '乙肝阳性丈夫的家庭防护责任。侧重疫苗保护、日常防护、伴侣接种。'}
+              </p>
+              <div className="flex items-center gap-2 mt-3 ml-12">
+                <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: '#E8F5E9', color: '#2A9D8F' }}>疫苗可预防</span>
+                <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: '#F0FAF4', color: '#52B788' }}>母婴阻断95%+</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 视角选择页
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8" style={{ backgroundColor: '#FEFAF6' }}>
       <div
@@ -43,11 +168,11 @@ function WelcomeScreen() {
         </div>
 
         {/* 视角选择 */}
-        <p className="text-sm font-medium mb-4" style={{ color: '#636E72' }}>选择你的视角，开始体验</p>
+        <p className="text-sm font-medium mb-4" style={{ color: '#636E72' }}>第一步：选择你的视角</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* 女性视角 */}
           <button
-            onClick={() => startGame('female')}
+            onClick={() => setSelectedPerspective('female')}
             className="group relative rounded-2xl p-6 text-left transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
             style={{ backgroundColor: '#FFFFFF', border: '2px solid #F0E6E6' }}
           >
@@ -62,17 +187,17 @@ function WelcomeScreen() {
               </div>
             </div>
             <p className="text-sm leading-relaxed" style={{ color: '#636E72' }}>
-              你是28岁的小琳，即将步入婚姻。经历高危接触后，你的每个选择都关乎自己和宝宝的未来。侧重母婴安全、备孕防护、孕期阻断。
+              你是育龄女性，经历高危接触后，每个选择都关乎自己和宝宝的未来。侧重母婴安全、备孕防护、孕期阻断。
             </p>
             <div className="absolute bottom-3 right-3 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity"
               style={{ color: '#E76F51' }}>
-              开始体验 →
+              选择疾病 →
             </div>
           </button>
 
           {/* 男性视角 */}
           <button
-            onClick={() => startGame('male')}
+            onClick={() => setSelectedPerspective('male')}
             className="group relative rounded-2xl p-6 text-left transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
             style={{ backgroundColor: '#FFFFFF', border: '2px solid #E0E8F0' }}
           >
@@ -87,11 +212,11 @@ function WelcomeScreen() {
               </div>
             </div>
             <p className="text-sm leading-relaxed" style={{ color: '#636E72' }}>
-              你是30岁的小军，已婚正在备孕。出差那晚的选择，将影响整个家庭。侧重男性筛查责任、伴侣防护、家庭传播阻断。
+              你是育龄男性，出差那晚的选择将影响整个家庭。侧重男性筛查责任、伴侣防护、家庭传播阻断。
             </p>
             <div className="absolute bottom-3 right-3 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity"
               style={{ color: '#2A9D8F' }}>
-              开始体验 →
+              选择疾病 →
             </div>
           </button>
         </div>
@@ -455,7 +580,7 @@ function EndingScreen() {
               </div>
               <div>
                 <p className="font-semibold mb-1" style={{ color: '#B8860B' }}>梅毒</p>
-                <p>早期规范治疗可100%治愈（青霉素特效），隐匿发病可致脏器、神经损害。夫妻必须同治，避免"乒乓感染"。</p>
+                <p>早期规范治疗可100%治愈（青霉素特效），隐匿发病可致脏器、神经损害。夫妻必须同治，避免&ldquo;乒乓感染&rdquo;。</p>
               </div>
               <div>
                 <p className="font-semibold mb-1" style={{ color: '#2A9D8F' }}>乙肝</p>
@@ -464,11 +589,11 @@ function EndingScreen() {
               <div className="pt-2" style={{ borderTop: '1px solid #E9C46A30' }}>
                 <p className="font-semibold mb-1" style={{ color: '#2D3436' }}>通用要点</p>
                 <ul className="space-y-1 text-sm" style={{ color: '#636E72' }}>
-                  <li>• 传播途径：血液传播、性传播、母婴传播（日常接触不传播）</li>
-                  <li>• 婚前/备孕免费筛查是家庭第一道保障</li>
-                  <li>• 坚决杜绝隐瞒：坦诚+科学=守护家庭的最强力量</li>
-                  <li>• 艾滋病感染者依法享有婚育权利，规范治疗可安全婚育</li>
-                  <li>• 高危行为后72小时内可采取紧急阻断措施</li>
+                  <li>&bull; 传播途径：血液传播、性传播、母婴传播（日常接触不传播）</li>
+                  <li>&bull; 婚前/备孕免费筛查是家庭第一道保障</li>
+                  <li>&bull; 坚决杜绝隐瞒：坦诚+科学=守护家庭的最强力量</li>
+                  <li>&bull; 艾滋病感染者依法享有婚育权利，规范治疗可安全婚育</li>
+                  <li>&bull; 高危行为后72小时内可采取紧急阻断措施</li>
                 </ul>
               </div>
             </div>

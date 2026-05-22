@@ -13,6 +13,8 @@ import type {
 } from './game-types';
 import { femaleData } from './game-data-female';
 import { maleData } from './game-data-male';
+import { femaleHivData } from './game-data-female-hiv';
+import { maleHivData } from './game-data-male-hiv';
 import type { PerspectiveData } from './game-types';
 
 interface GameContextValue {
@@ -20,7 +22,7 @@ interface GameContextValue {
   currentNode: StoryNode | null;
   perspectiveData: PerspectiveData | null;
   knowledgePopup: KnowledgePopup | null;
-  startGame: (perspective: Perspective) => void;
+  startGame: (perspective: Perspective, disease: DiseaseType) => void;
   makeChoice: (choice: Choice) => void;
   proceedToNext: () => void;
   dismissKnowledge: () => void;
@@ -45,23 +47,31 @@ export function useGame() {
   return ctx;
 }
 
-function getDataForPerspective(perspective: Perspective): PerspectiveData {
-  return perspective === 'female' ? femaleData : maleData;
+function getDataForPerspectiveAndDisease(perspective: Perspective, disease: DiseaseType): PerspectiveData {
+  if (perspective === 'female') {
+    if (disease === 'hiv') return femaleHivData;
+    return femaleData; // default: hepatitisB
+  } else {
+    if (disease === 'hiv') return maleHivData;
+    return maleData; // default: syphilis
+  }
 }
 
 export function GameProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<GameState>(initialState);
   const [knowledgePopup, setKnowledgePopup] = useState<KnowledgePopup | null>(null);
 
-  const perspectiveData = state.perspective ? getDataForPerspective(state.perspective) : null;
+  const perspectiveData = state.perspective && state.disease
+    ? getDataForPerspectiveAndDisease(state.perspective, state.disease)
+    : null;
   const currentNode =
     state.currentNodeId && perspectiveData ? perspectiveData.nodes[state.currentNodeId] ?? null : null;
 
-  const startGame = useCallback((perspective: Perspective) => {
-    const data = getDataForPerspective(perspective);
+  const startGame = useCallback((perspective: Perspective, disease: DiseaseType) => {
+    const data = getDataForPerspectiveAndDisease(perspective, disease);
     setState({
       perspective,
-      disease: data.diseaseAssigned,
+      disease,
       currentNodeId: data.startNodeId,
       choiceHistory: [],
       isStarted: true,
@@ -87,8 +97,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
       };
 
       setState((prev) => {
-        const data = prev.perspective ? getDataForPerspective(prev.perspective) : null;
-        if (!data) return prev;
+        if (!prev.perspective || !prev.disease) return prev;
+        const data = getDataForPerspectiveAndDisease(prev.perspective, prev.disease);
         const targetNode = data.nodes[choice.nextNodeId];
         return {
           ...prev,
@@ -146,8 +156,19 @@ export function GameProvider({ children }: { children: ReactNode }) {
     const score = Math.min(100, baseScore + honestyBonus + checkBonus);
 
     const knowledgeSummary: string[] = [];
+    const disease = state.disease;
 
-    if (state.perspective === 'female') {
+    // Disease-specific knowledge
+    if (disease === 'hiv') {
+      knowledgeSummary.push(
+        'HIV规范抗病毒治疗后可实现U=U（检测不到=不传染），可正常生活婚育',
+        '艾滋病72小时内可服用阻断药（PEP），2小时内成功率高达99%',
+        'HIV母婴阻断成功率超过98%，感染者完全可以生育健康宝宝',
+        '我国法律明确保护HIV感染者的婚育权利，不禁止婚育',
+        '隐瞒HIV感染违反《艾滋病防治条例》和《民法典》，可被申请撤销婚姻',
+        'U=U不是口号，是WHO确认的科学事实——检测不到=不传染',
+      );
+    } else if (disease === 'hepatitisB') {
       knowledgeSummary.push(
         '乙肝妈妈母婴阻断成功率>95%，规范治疗可安全生育健康宝宝',
         '乙肝疫苗保护率>95%，伴侣接种后可安全亲密接触',
@@ -156,7 +177,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         '隐瞒乙肝病情违反《民法典》，可被申请撤销婚姻',
         '日常吃饭、握手、拥抱不会传播乙肝',
       );
-    } else {
+    } else if (disease === 'syphilis') {
       knowledgeSummary.push(
         '梅毒早期规范治疗可100%治愈，青霉素是特效药',
         '男性无症状携带是最常见的家庭传染源，主动筛查至关重要',
@@ -169,10 +190,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
     // Add common knowledge
     knowledgeSummary.push(
-      '艾滋病72小时内可服用阻断药，成功率高达99%',
       '艾梅乙核心传播途径：血液传播、性传播、母婴传播',
       '婚前/备孕免费筛查是家庭第一道保障',
-      '艾滋病U=U：规范治疗后检测不到病毒=不传染，可正常婚育',
       '坦诚+科学=守护家庭的最强力量',
     );
 
