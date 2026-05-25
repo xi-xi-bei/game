@@ -33,6 +33,8 @@
 │   │   ├── game-data-male.ts      # 男性视角·梅毒剧情数据
 │   │   ├── game-data-female-hiv.ts # 女性视角·艾滋病剧情数据
 │   │   ├── game-data-male-hiv.ts   # 男性视角·艾滋病剧情数据
+│   │   ├── game-data-female-syphilis.ts # 女性视角·梅毒剧情数据
+│   │   ├── game-data-male-hb.ts         # 男性视角·乙肝剧情数据
 │   │   └── utils.ts        # 通用工具函数 (cn)
 │   └── server.ts           # 自定义服务端入口
 ├── DESIGN.md               # 设计规范
@@ -44,7 +46,7 @@
 ## 核心架构
 
 - **状态管理**：React Context（`GameProvider` + `useGame` hook），管理游戏流程、节点跳转、选择记录
-- **剧情数据**：四个独立的 `PerspectiveData` 对象（`femaleData`(乙肝) / `maleData`(梅毒) / `femaleHivData`(艾滋病) / `maleHivData`(艾滋病)），每个节点 `StoryNode` 含叙述、选项、科普弹窗
+- **剧情数据**：六个独立的 `PerspectiveData` 对象（`femaleData`(乙肝) / `femaleSyphilisData`(梅毒) / `femaleHivData`(艾滋病) / `maleData`(梅毒) / `maleHbData`(乙肝) / `maleHivData`(艾滋病)），每个节点 `StoryNode` 含叙述、选项、科普弹窗
 - **游戏流程**：开篇选择视角 → 选择疾病 → 节点导航（选项/自动跳转） → 科普弹窗 → 结局评级
 - **结局评级**：根据选择正确率、是否隐瞒、是否跳过检查计算分数，分三档（完美/普通/遗憾）
 

@@ -15,6 +15,8 @@ import { femaleData } from './game-data-female';
 import { maleData } from './game-data-male';
 import { femaleHivData } from './game-data-female-hiv';
 import { maleHivData } from './game-data-male-hiv';
+import { femaleSyphilisData } from './game-data-female-syphilis';
+import { maleHbData } from './game-data-male-hb';
 import type { PerspectiveData } from './game-types';
 
 interface GameContextValue {
@@ -50,10 +52,12 @@ export function useGame() {
 function getDataForPerspectiveAndDisease(perspective: Perspective, disease: DiseaseType): PerspectiveData {
   if (perspective === 'female') {
     if (disease === 'hiv') return femaleHivData;
-    return femaleData; // default: hepatitisB
+    if (disease === 'syphilis') return femaleSyphilisData;
+    return femaleData; // hepatitisB
   } else {
     if (disease === 'hiv') return maleHivData;
-    return maleData; // default: syphilis
+    if (disease === 'hepatitisB') return maleHbData;
+    return maleData; // syphilis
   }
 }
 
