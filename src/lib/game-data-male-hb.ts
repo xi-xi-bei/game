@@ -206,6 +206,19 @@ export const maleHbData: PerspectiveData = {
           nextNodeId: 'mhb_prepregnancy_honest',
           tags: ['honest', 'premarital_check'],
         },
+        {
+          id: 'mhb_pm_h_2',
+          text: '先不急着备孕，但治疗的事也先放一放',
+          isCorrect: false,
+          knowledge: {
+            title: '乙肝治疗不能等！',
+            content:
+              '乙肝拖延治疗的后果比想象更严重：\n\n⚠️ 不治疗=病毒持续复制=肝功能持续受损\n⚠️ 长期慢性炎症→肝硬化→肝癌，这不是吓人，是医学事实\n⚠️ 传染性居高不下=家人持续暴露\n⚠️ 拖得越久，治疗效果越差\n\n💡 乙肝抗病毒治疗越早开始效果越好。早治疗可以稳定病情、降低传染性，是保护全家的第一步。',
+            type: 'warning',
+          },
+          nextNodeId: 'mhb_prepregnancy_delay',
+          tags: ['honest', 'delayed_treatment'],
+        },
       ],
     },
 
@@ -404,6 +417,93 @@ export const maleHbData: PerspectiveData = {
           },
           nextNodeId: 'mhb_prenatal_honest',
           tags: ['honest_late', 'late_check'],
+        },
+        {
+          id: 'mhb_ppg_lc_2',
+          text: '我自己治就行了，小雪不用打疫苗吧',
+          isCorrect: false,
+          knowledge: {
+            title: '妻子必须接种疫苗！',
+            content:
+              '只治自己不给妻子打疫苗，防护只是一半：\n\n⚠️ 小雪没有抗体=亲密接触中仍可能被感染\n⚠️ 妻子感染乙肝→孕期母婴传播→新生儿乙肝\n⚠️ 乙肝疫苗保护率>95%，是最简单有效的预防手段\n\n💡 给妻子接种疫苗是男性乙肝患者保护家庭最关键的一步。疫苗安全、免费（部分地区）、效果极好，没有理由不打。',
+            type: 'warning',
+          },
+          nextNodeId: 'mhb_prenatal_honest_no_partner_check',
+          tags: ['honest_late', 'no_partner_vaccine'],
+        },
+      ],
+    },
+
+    // ========== 孕前检查 - 拖延治疗路径 ==========
+    mhb_prepregnancy_delay: {
+      id: 'mhb_prepregnancy_delay',
+      stage: 'prepregnancy',
+      sceneTitle: '治疗拖延',
+      narrative:
+        '你虽然知道自己携带乙肝病毒，但总觉得"没什么症状就不用管"，没认真做抗病毒治疗。小雪开始催你备孕，你心虚地同意了——但小雪不知道真相，也没打过疫苗。',
+      choices: [
+        {
+          id: 'mhb_ppg_d_1',
+          text: '在备孕前向小雪坦白，一起去医院做全面检查',
+          isCorrect: true,
+          knowledge: {
+            title: '坦诚永远不晚',
+            content:
+              '即使拖延了治疗，只要在备孕前坦白并就医，仍然可以科学防护：\n\n✅ 向小雪坦白——给伴侣知情权\n✅ 你开始规范抗病毒治疗\n✅ 小雪查乙肝抗体+接种疫苗\n✅ 病毒载量达标+抗体产生后再备孕\n\n💡 拖延不是绝路，现在坦白仍然来得及。乙肝可治可控，关键是不再隐瞒。',
+            type: 'correct',
+          },
+          nextNodeId: 'mhb_prenatal_honest',
+          tags: ['honest', 'late_start'],
+        },
+        {
+          id: 'mhb_ppg_d_2',
+          text: '既然小雪想备孕就顺其自然吧，我这点小事不影响',
+          isCorrect: false,
+          knowledge: {
+            title: '"小事"可能变成大事',
+            content:
+              '男性乙肝不治疗就备孕，后果远超"小事"：\n\n❌ 小雪没有抗体→可能被感染\n❌ 孕期感染乙肝→母婴传播→新生儿终身携带\n❌ 你的病情也在发展→肝硬化、肝癌风险持续增加\n❌ 家庭聚集性感染→全家健康受损\n\n⚠️ 乙肝不是"男人的小事"，它直接关系到妻子和孩子的健康。疫苗和治疗如此简单，不做才是最大的风险。',
+            type: 'danger',
+          },
+          nextNodeId: 'mhb_prenatal_hide',
+          tags: ['hidden', 'passive'],
+        },
+      ],
+    },
+
+    // ========== 孕期产检 - 坦诚但伴侣未接种疫苗 ==========
+    mhb_prenatal_honest_no_partner_check: {
+      id: 'mhb_prenatal_honest_no_partner_check',
+      stage: 'prenatal',
+      sceneTitle: '伴侣感染风险',
+      narrative:
+        '你规范治疗了乙肝，但在孕12周产检时，医生发现小雪的乙肝两对半全是阴性——她没有抗体，完全暴露在感染风险中。\n\n"你丈夫是乙肝携带者，你怎么没打过疫苗？"医生问。小雪茫然地看着你——你从没告诉过她。',
+      choices: [
+        {
+          id: 'mhb_pn_hnpc_1',
+          text: '立刻让小雪接种乙肝疫苗，重新制定家庭防护方案',
+          isCorrect: true,
+          knowledge: {
+            title: '孕期也可以接种疫苗',
+            content:
+              '乙肝疫苗在孕期是安全的，可以接种：\n\n✅ 乙肝疫苗是灭活疫苗，孕期接种安全\n✅ 产生抗体后可保护小雪和宝宝\n✅ 你继续规范抗病毒治疗\n✅ 宝宝出生后按常规接种乙肝疫苗\n\n💡 虽然应该更早接种，但孕期打疫苗仍然有效。亡羊补牢，犹未为晚。',
+            type: 'correct',
+          },
+          nextNodeId: 'mhb_prenatal_honest',
+          tags: ['honest', 'partner_vaccinated'],
+        },
+        {
+          id: 'mhb_pn_hnpc_2',
+          text: '孕期不能打疫苗吧，产后再说',
+          isCorrect: false,
+          knowledge: {
+            title: '孕期乙肝疫苗安全可接种',
+            content:
+              '很多人误以为孕期不能打疫苗，这是错的：\n\n❌ 乙肝疫苗是灭活疫苗，对孕妇和胎儿安全\n❌ 不接种=小雪整个孕期都没有保护\n❌ 如果孕期感染乙肝→母婴传播风险极高\n\n💡 乙肝疫苗不仅孕期可以打，而且应该尽快打。等待只会增加风险。',
+            type: 'warning',
+          },
+          nextNodeId: 'mhb_prenatal_hide',
+          tags: ['hidden', 'delayed_vaccine'],
         },
       ],
     },

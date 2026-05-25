@@ -206,6 +206,19 @@ export const femaleSyphilisData: PerspectiveData = {
           nextNodeId: 'fs_prepregnancy_honest',
           tags: ['honest', 'premarital_check'],
         },
+        {
+          id: 'fs_pm_h_2',
+          text: '先不急着备孕，但复查的事以后再说吧',
+          isCorrect: false,
+          knowledge: {
+            title: '梅毒复查绝不能拖！',
+            content:
+              '梅毒治疗后必须定期复查，拖延复查等于"治疗白做"：\n\n⚠️ RPR滴度不下降=治疗失败或再感染\n⚠️ 不复查就无法确认是否真正治愈\n⚠️ 梅毒可"表面好转"实则潜伏进展\n⚠️ 拖延复查期间如果怀孕，胎儿风险极大\n\n💡 梅毒治疗后第3、6、12个月必须复查RPR。这是确认治愈的唯一方式，没有捷径。',
+            type: 'warning',
+          },
+          nextNodeId: 'fs_prepregnancy_delay',
+          tags: ['honest', 'delayed_followup'],
+        },
       ],
     },
 
@@ -420,6 +433,93 @@ export const femaleSyphilisData: PerspectiveData = {
           },
           nextNodeId: 'fs_prenatal_honest',
           tags: ['honest_late', 'late_check'],
+        },
+        {
+          id: 'fs_ppg_lc_2',
+          text: '我自己治就行了，不用让阿杰也去检查',
+          isCorrect: false,
+          knowledge: {
+            title: '梅毒必须夫妻同治！',
+            content:
+              '梅毒只治一方是无效的——这是医学铁律：\n\n⚠️ 如果阿杰也感染了不治疗，你们之间会反复交叉感染\n⚠️ 你治好了又被阿杰传染=治疗白费\n⚠️ 阿杰的梅毒会继续发展，损害心血管和神经系统\n\n💡 夫妻同治是梅毒治疗的基本原则，不是可选项。只有双方同时治愈，才能真正断绝传播链。',
+            type: 'warning',
+          },
+          nextNodeId: 'fs_prenatal_honest_no_partner_check',
+          tags: ['honest_late', 'no_partner_check'],
+        },
+      ],
+    },
+
+    // ========== 孕前检查 - 拖延复查路径 ==========
+    fs_prepregnancy_delay: {
+      id: 'fs_prepregnancy_delay',
+      stage: 'prepregnancy',
+      sceneTitle: '复查拖延',
+      narrative:
+        '你虽然做了梅毒治疗，但总觉得"打了针应该就好了"，没认真去复查RPR滴度。几个月过去了，你意外发现自己怀孕了——不知道自己是否治愈，也没确认过阿杰的情况。',
+      choices: [
+        {
+          id: 'fs_ppg_d_1',
+          text: '立刻去医院做全面检查，确认治疗结果',
+          isCorrect: true,
+          knowledge: {
+            title: '立刻行动仍有机会',
+            content:
+              '即使拖延了复查，只要立即就医仍然可以科学防护：\n\n✅ 立即查RPR滴度，确认治疗效果\n✅ 让阿杰也做梅毒筛查\n✅ 如果未治愈，孕期仍可规范治疗\n✅ 制定分娩和新生儿管理方案\n\n💡 重要的不是之前错过了什么，而是现在立刻行动。梅毒孕期治疗同样有效，关键是不再拖延。',
+            type: 'correct',
+          },
+          nextNodeId: 'fs_prenatal_honest',
+          tags: ['honest', 'late_start'],
+        },
+        {
+          id: 'fs_ppg_d_2',
+          text: '已经打过针了应该没事，等产检再说吧',
+          isCorrect: false,
+          knowledge: {
+            title: '打了针≠治好了',
+            content:
+              '梅毒治疗"打一针就万事大吉"是最常见的误区：\n\n❌ 青霉素治疗需要完整疗程，不是一针就够\n❌ 不复查RPR滴度=不知道是否真正治愈\n❌ 孕期梅毒不治疗→流产率20%、死胎率10%\n❌ 先天梅毒可致新生儿全身多器官损害\n\n⚠️ "打了针"只是治疗的开始，不是结束。复查确认才是真正的"治好"。',
+            type: 'danger',
+          },
+          nextNodeId: 'fs_prenatal_hide',
+          tags: ['hidden', 'passive'],
+        },
+      ],
+    },
+
+    // ========== 孕期产检 - 坦诚但伴侣未查 ==========
+    fs_prenatal_honest_no_partner_check: {
+      id: 'fs_prenatal_honest_no_partner_check',
+      stage: 'prenatal',
+      sceneTitle: '反复感染',
+      narrative:
+        '你规范治疗了梅毒，RPR滴度也在下降。但在孕20周复查时，RPR滴度突然回升——医生说你可能被再次感染了。\n\n"你的伴侣做过检测吗？"医生问。阿杰从未做过梅毒检查。',
+      choices: [
+        {
+          id: 'fs_pn_hnpc_1',
+          text: '让阿杰立即检查并同步治疗',
+          isCorrect: true,
+          knowledge: {
+            title: '夫妻同治才能断根',
+            content:
+              '梅毒反复感染的根本原因就是只治一方：\n\n✅ 阿杰立即做梅毒检测\n✅ 如果阳性，夫妻同时规范治疗\n✅ 治疗期间避免无保护接触\n✅ 双方定期复查RPR确认治愈\n\n💡 梅毒夫妻同治不是建议，是必须。只有双方同时治愈，才能彻底断绝传播链。',
+            type: 'correct',
+          },
+          nextNodeId: 'fs_prenatal_honest',
+          tags: ['honest', 'partner_treated'],
+        },
+        {
+          id: 'fs_pn_hnpc_2',
+          text: '可能是我自己没治好吧，再打一针就行了',
+          isCorrect: false,
+          knowledge: {
+            title: '反复感染≠治疗失败',
+            content:
+              'RPR滴度回升最常见的原因是再感染，不是治疗失败：\n\n❌ 只治自己不治伴侣=治好了又被传染\n❌ 反复感染会让治疗更加困难\n❌ 孕期反复感染严重危害胎儿\n\n💡 治病要治本——本就是"传染源"。伴侣不查不治，你永远治不好。',
+            type: 'warning',
+          },
+          nextNodeId: 'fs_prenatal_hide',
+          tags: ['hidden', 'reinfected'],
         },
       ],
     },

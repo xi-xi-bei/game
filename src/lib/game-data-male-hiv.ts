@@ -476,6 +476,56 @@ export const maleHivData: PerspectiveData = {
           nextNodeId: 'mh_prenatal_honest',
           tags: ['honest_late', 'late_check'],
         },
+        {
+          id: 'mh_ppg_lc_2',
+          text: '我自己治疗就行，小雅不用去检测吧',
+          isCorrect: false,
+          knowledge: {
+            title: '伴侣必须同步检测！',
+            content:
+              'HIV只治自己不查伴侣，是最危险的侥幸心理：\n\n⚠️ 小雅可能已被感染——不检测就不知道\n⚠️ 如果小雅也感染了却不治疗，病情会持续恶化\n⚠️ 小雅若未感染，可使用PrEP（暴露前预防）保护自己\n⚠️ 隐瞒检测结果违法——HIV感染者有告知义务\n\n💡 伴侣检测不是"连累对方"，而是保护对方。早检测=早安心=早防护。不让伴侣检测，不是在保护她，而是在害她。',
+            type: 'warning',
+          },
+          nextNodeId: 'mh_prenatal_honest_no_partner_check',
+          tags: ['honest_late', 'no_partner_check'],
+        },
+      ],
+    },
+
+    // ========== 孕期产检 - 坦诚但伴侣未查 ==========
+    mh_prenatal_honest_no_partner_check: {
+      id: 'mh_prenatal_honest_no_partner_check',
+      stage: 'prenatal',
+      sceneTitle: '伴侣感染发现',
+      narrative:
+        '你按照医嘱规范治疗，病毒载量已检测不到。但在孕24周时，小雅因为持续低烧和皮疹去医院检查——HIV阳性。\n\n医生说："如果当初让小雅也做了检测，完全可以更早发现。现在她孕期感染，母婴传播风险显著增加。"',
+      choices: [
+        {
+          id: 'mh_pn_hnpc_1',
+          text: '立即让小雅开始抗病毒治疗，启动母婴阻断方案',
+          isCorrect: true,
+          knowledge: {
+            title: '孕期发现HIV仍然可以阻断',
+            content:
+              '即使孕期才发现HIV，只要立即开始治疗，母婴阻断仍有效：\n\n✅ 小雅立即启动抗病毒治疗\n✅ 孕晚期加强监测病毒载量\n✅ 选择合适的分娩方式\n✅ 新生儿出生后预防性用药4-6周\n✅ 配方奶喂养\n\n💡 即使晚了一步，科学干预仍然可以大幅降低母婴传播风险。关键是不再犹豫。',
+            type: 'correct',
+          },
+          nextNodeId: 'mh_prenatal_honest',
+          tags: ['honest', 'partner_treated'],
+        },
+        {
+          id: 'mh_pn_hnpc_2',
+          text: '先不管小雅了，保住我的治疗就行',
+          isCorrect: false,
+          knowledge: {
+            title: '忽视伴侣=忽视家庭安全',
+            content:
+              'HIV不是一个人的事，是整个家庭的事：\n\n❌ 小雅不治疗=病情持续恶化=严重健康风险\n❌ 孕期HIV不干预=母婴传播率25%-45%\n❌ 孩子出生后，未治疗的母亲也是风险源\n\n💡 家庭是一个整体，只做"一半防护"等于没做。夫妻同查同治，才能真正守护全家。',
+            type: 'warning',
+          },
+          nextNodeId: 'mh_prenatal_hide',
+          tags: ['hidden', 'partner_ignored'],
+        },
       ],
     },
 

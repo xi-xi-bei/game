@@ -238,6 +238,19 @@ export const femaleHivData: PerspectiveData = {
           nextNodeId: 'fh_prepregnancy_honest',
           tags: ['honest', 'premarital_check'],
         },
+        {
+          id: 'fh_pm_h_2',
+          text: '治疗的事先放一放，现在生活稳定了再说备孕',
+          isCorrect: false,
+          knowledge: {
+            title: '拖延治疗=增加传播风险',
+            content:
+              'HIV感染不会"等你想治了再恶化"，拖延只会让情况更复杂：\n\n⚠️ 不治疗=病毒持续复制=免疫力逐渐下降\n⚠️ 病毒载量居高不下=传染伴侣的风险增加\n⚠️ 错过最佳治疗时机=后续治疗难度加大\n\n💡 HIV抗病毒治疗越早开始效果越好。早治疗、早达标（U=U），才能安全备孕、守护家人。拖延不是"稳妥"，而是给风险留了门。',
+            type: 'warning',
+          },
+          nextNodeId: 'fh_prepregnancy_delay',
+          tags: ['honest', 'delayed_treatment'],
+        },
       ],
     },
 
@@ -489,6 +502,93 @@ export const femaleHivData: PerspectiveData = {
           },
           nextNodeId: 'fh_prenatal_honest',
           tags: ['honest_late', 'late_check'],
+        },
+        {
+          id: 'fh_ppg_lc_2',
+          text: '虽然查出来了，但害怕阿杰被歧视，不想让他去检测',
+          isCorrect: false,
+          knowledge: {
+            title: '伴侣必须同步检测！',
+            content:
+              'HIV感染后伴侣检测是必须的，不能因为"怕歧视"就跳过：\n\n⚠️ 阿杰可能已经被感染——不检测就不知道\n⚠️ 如果阿杰也感染了却不治疗，病情会持续恶化\n⚠️ 阿杰若未感染，可以使用PrEP（暴露前预防）保护自己\n\n💡 医疗信息严格保密，检测结果仅本人可知。保护隐私和做好防护不矛盾——两者都要！不让伴侣检测，不是在保护他，而是在害他。',
+            type: 'warning',
+          },
+          nextNodeId: 'fh_prenatal_honest_no_partner_check',
+          tags: ['honest_late', 'no_partner_check'],
+        },
+      ],
+    },
+
+    // ========== 孕前检查 - 拖延治疗路径 ==========
+    fh_prepregnancy_delay: {
+      id: 'fh_prepregnancy_delay',
+      stage: 'prepregnancy',
+      sceneTitle: '治疗拖延',
+      narrative:
+        '你虽然知道自己HIV阳性，但总觉得"先不急"，没认真做抗病毒治疗。日子一天天过去，你意外发现自己怀孕了——没有提前评估病毒载量，没有调整孕期安全用药，阿杰也没做过检测。',
+      choices: [
+        {
+          id: 'fh_ppg_d_1',
+          text: '立刻去医院，全面评估病情并启动母婴阻断',
+          isCorrect: true,
+          knowledge: {
+            title: '意外怀孕也要第一时间干预',
+            content:
+              '即使意外怀孕，只要立即开始规范治疗，仍然可以大幅降低母婴传播风险：\n\n✅ 立即启动/恢复抗病毒治疗\n✅ 评估病毒载量和CD4计数\n✅ 让阿杰做HIV检测\n✅ 制定分娩和新生儿阻断方案\n\n💡 关键不是"有没有提前准备"，而是"发现后立刻行动"。HIV母婴阻断成功率>98%，前提是认真执行每一步。',
+            type: 'correct',
+          },
+          nextNodeId: 'fh_prenatal_honest',
+          tags: ['honest', 'late_start'],
+        },
+        {
+          id: 'fh_ppg_d_2',
+          text: '怀孕了就顺其自然吧，产后再治疗也不迟',
+          isCorrect: false,
+          knowledge: {
+            title: '产后再治？太晚了！',
+            content:
+              'HIV母婴阻断的关键窗口在孕期和分娩时，产后治疗无法挽回：\n\n❌ 孕期不治疗=病毒持续传给胎儿\n❌ 分娩时不干预=产道暴露感染风险极高\n❌ 新生儿不预防性用药=感染概率达25%-45%\n\n⚠️ 对比数据：不做阻断母婴传播率25%-45%，规范阻断后不到2%！孕期是唯一能主动保护宝宝的机会，错过就无法弥补。',
+            type: 'danger',
+          },
+          nextNodeId: 'fh_prenatal_hide',
+          tags: ['hidden', 'passive'],
+        },
+      ],
+    },
+
+    // ========== 孕期产检 - 坦诚但伴侣未查 ==========
+    fh_prenatal_honest_no_partner_check: {
+      id: 'fh_prenatal_honest_no_partner_check',
+      stage: 'prenatal',
+      sceneTitle: '伴侣感染发现',
+      narrative:
+        '你按照医嘱规范产检，但在孕24周时，阿杰因为持续发烧去医院检查——HIV阳性。\n\n医生说："如果当初让阿杰也做了检测，完全可以更早发现、更早治疗。"',
+      choices: [
+        {
+          id: 'fh_pn_hnpc_1',
+          text: '让阿杰立即开始抗病毒治疗，重新制定家庭防护方案',
+          isCorrect: true,
+          knowledge: {
+            title: '夫妻同查同治是基本原则',
+            content:
+              'HIV一方确诊，另一方必须同步检测和治疗：\n\n✅ 阿杰立即启动抗病毒治疗，越早越好\n✅ 你继续规范产检和母婴阻断\n✅ 新生儿出生后按规范预防性用药\n✅ 产后全家定期随访\n\n💡 "早发现早治疗"对谁都适用。虽然晚了，但现在行动仍然有意义。',
+            type: 'correct',
+          },
+          nextNodeId: 'fh_prenatal_honest',
+          tags: ['honest', 'partner_treated'],
+        },
+        {
+          id: 'fh_pn_hnpc_2',
+          text: '先不管阿杰了，保住孩子最重要',
+          isCorrect: false,
+          knowledge: {
+            title: '忽视伴侣=忽视家庭安全',
+            content:
+              '只关注自己不管伴侣，家庭防护永远有漏洞：\n\n❌ 阿杰不治疗=免疫力持续下降=严重健康风险\n❌ 日常生活仍有传播风险\n❌ 孩子出生后，未治疗的父亲也是风险源\n\n💡 家庭是一个整体，只做"一半防护"不如不做。夫妻同查同治，才能真正守护全家。',
+            type: 'warning',
+          },
+          nextNodeId: 'fh_prenatal_honest',
+          tags: ['honest', 'partner_ignored'],
         },
       ],
     },

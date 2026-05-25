@@ -238,6 +238,19 @@ export const maleData: PerspectiveData = {
           nextNodeId: 'm_prepregnancy_honest',
           tags: ['honest', 'premarital_check'],
         },
+        {
+          id: 'm_pm_h_2',
+          text: '治疗的事先放一放，等想要孩子再说',
+          isCorrect: false,
+          knowledge: {
+            title: '梅毒拖延治疗后果严重',
+            content:
+              '梅毒不会"等你准备好了"再发展，拖延只会让病情加重：\n\n⚠️ 一期梅毒不治疗→发展为二期，全身皮疹、淋巴结肿大\n⚠️ 二期不治疗→进入潜伏期，悄悄损害心血管和神经系统\n⚠️ 三期梅毒→主动脉炎、脊髓痨、麻痹性痴呆，不可逆损伤\n\n💡 梅毒越早治疗效果越好，早期梅毒青霉素治疗几乎100%治愈。拖延不是"稳妥"，是给病毒时间破坏你的身体。',
+            type: 'warning',
+          },
+          nextNodeId: 'm_prepregnancy_delay',
+          tags: ['honest', 'delayed_treatment'],
+        },
       ],
     },
 
@@ -489,6 +502,56 @@ export const maleData: PerspectiveData = {
           },
           nextNodeId: 'm_prenatal_honest',
           tags: ['honest_late', 'late_check'],
+        },
+        {
+          id: 'm_ppg_lc_2',
+          text: '我还是不敢告诉小雪，自己继续偷偷治疗吧',
+          isCorrect: false,
+          knowledge: {
+            title: '独自治疗=白费力气',
+            content:
+              '梅毒只治自己是治不好的——这是医学铁律：\n\n⚠️ 小雪可能已被感染，不查不治=反复交叉感染\n⚠️ 你治好了又被传染=治疗白费\n⚠️ 小雪孕期感染→流产、死胎、先天梅毒\n⚠️ 隐瞒越久，坦白的代价越大\n\n💡 夫妻同治不是建议，是必须。独自治疗就像只灭了家里一半的火，另一半迟早烧回来。坦诚告知，夫妻同治，才是真正的解决办法。',
+            type: 'warning',
+          },
+          nextNodeId: 'm_prenatal_hide',
+          tags: ['hidden', 'solo_treatment'],
+        },
+      ],
+    },
+
+    // ========== 孕前检查 - 拖延治疗路径 ==========
+    m_prepregnancy_delay: {
+      id: 'm_prepregnancy_delay',
+      stage: 'prepregnancy',
+      sceneTitle: '治疗拖延',
+      narrative:
+        '你虽然知道自己梅毒阳性，但总觉得"先不急"，没有认真做规范治疗。日子一天天过去，小雪开始催你备孕——\n\n你心虚地同意了。但内心深处，你知道自己还没治好，小雪也不知道真相。',
+      choices: [
+        {
+          id: 'm_ppg_d_1',
+          text: '在备孕前鼓起勇气向小雪坦白，一起去看医生',
+          isCorrect: true,
+          knowledge: {
+            title: '坦诚永远不晚',
+            content:
+              '即使拖延了治疗，只要在备孕前坦白并就医，仍然可以科学防护：\n\n✅ 向小雪坦白——给伴侣知情权\n✅ 立即开始规范青霉素治疗\n✅ 小雪同步检测+预防性治疗\n✅ 确认双方治愈后再备孕\n\n💡 拖延不是绝路，现在坦白仍然来得及。越早坦诚，伤害越小，治疗越有效。',
+            type: 'correct',
+          },
+          nextNodeId: 'm_prenatal_honest',
+          tags: ['honest', 'late_start'],
+        },
+        {
+          id: 'm_ppg_d_2',
+          text: '既然小雪想备孕就顺其自然吧，治疗以后再说',
+          isCorrect: false,
+          knowledge: {
+            title: '未治愈就备孕=拿整个家庭冒险',
+            content:
+              '男性梅毒未治愈就备孕，后果不堪设想：\n\n❌ 传染小雪→孕期梅毒可致流产、死胎、先天梅毒\n❌ 先天梅毒→新生儿全身多器官损害\n❌ 乒乓感染→夫妻反复交叉传染\n❌ 真相终究会在产检中暴露\n\n⚠️ 梅毒不是"男人的小事"，它直接关系到伴侣和孩子的生命健康。拖延治疗不是"等准备好了"，而是拿全家人的健康赌博。',
+            type: 'danger',
+          },
+          nextNodeId: 'm_prenatal_hide',
+          tags: ['hidden', 'passive'],
         },
       ],
     },

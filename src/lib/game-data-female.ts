@@ -238,6 +238,19 @@ export const femaleData: PerspectiveData = {
           nextNodeId: 'f_prepregnancy_honest',
           tags: ['honest', 'premarital_check'],
         },
+        {
+          id: 'f_pm_h_2',
+          text: '知道了，但备孕的事以后再说吧，先安心过日子',
+          isCorrect: false,
+          knowledge: {
+            title: '拖延备孕规划≠安全',
+            content:
+              '推迟备孕规划看似"稳妥"，实际上暗藏风险：\n\n⚠️ 乙肝病毒载量会随时间波动，不监测就不知道何时适合备孕\n⚠️ 伴侣的抗体水平需要确认，保护不是一劳永逸的\n⚠️ 意外怀孕+未做准备=母婴传播风险显著增加\n\n💡 科学婚育讲究"有备而来"：提前规划、定期监测、在最佳时机备孕，才是真正的安心之道。',
+            type: 'warning',
+          },
+          nextNodeId: 'f_prepregnancy_delay',
+          tags: ['honest', 'delayed_planning'],
+        },
       ],
     },
 
@@ -489,6 +502,93 @@ export const femaleData: PerspectiveData = {
           },
           nextNodeId: 'f_prenatal_honest',
           tags: ['honest_late', 'late_check'],
+        },
+        {
+          id: 'f_ppg_lc_2',
+          text: '虽然查出来了，但还是不好意思让阿杰去查乙肝抗体',
+          isCorrect: false,
+          knowledge: {
+            title: '伴侣筛查同样重要！',
+            content:
+              '只查自己不查伴侣，等于只做了一半防护：\n\n⚠️ 如果阿杰没有乙肝抗体，亲密接触中仍有可能被感染\n⚠️ 伴侣感染后，夫妻间可能反复交叉传染\n⚠️ 阿杰的抗体状态决定了是否需要补种疫苗\n\n💡 "保护自己，也保护对方"——双方共同筛查、共同防护，才是完整的家庭健康方案。不必不好意思，这是对彼此最负责任的爱。',
+            type: 'warning',
+          },
+          nextNodeId: 'f_prenatal_honest_no_partner_check',
+          tags: ['honest_late', 'no_partner_check'],
+        },
+      ],
+    },
+
+    // ========== 孕前检查 - 拖延备孕路径 ==========
+    f_prepregnancy_delay: {
+      id: 'f_prepregnancy_delay',
+      stage: 'prepregnancy',
+      sceneTitle: '备孕拖延',
+      narrative:
+        '你虽然知道自己的乙肝情况，但总觉得"顺其自然"就好，没有认真去做备孕检查。\n\n几个月过去了，你意外发现自己怀孕了——完全没做准备，没有提前评估病毒载量，阿杰也没查过抗体。',
+      choices: [
+        {
+          id: 'f_ppg_d_1',
+          text: '赶紧去医院做全面产检，把情况告诉医生',
+          isCorrect: true,
+          knowledge: {
+            title: '意外怀孕也要第一时间就医',
+            content:
+              '即使意外怀孕，只要第一时间就医，仍然可以科学防护：\n\n✅ 尽早建档：告知医生乙肝感染史\n✅ 评估病毒载量：决定是否需要孕晚期抗病毒治疗\n✅ 确认阿杰的抗体状态\n✅ 制定分娩和新生儿阻断方案\n\n💡 关键不是"有没有提前准备"，而是"发现问题后怎么做"。从现在开始，每一步都算数。',
+            type: 'correct',
+          },
+          nextNodeId: 'f_prenatal_honest',
+          tags: ['honest', 'late_start'],
+        },
+        {
+          id: 'f_ppg_d_2',
+          text: '既然怀了就顺其自然吧，之前的婚检结果应该还管用',
+          isCorrect: false,
+          knowledge: {
+            title: '顺其自然≠科学防护',
+            content:
+              '乙肝怀孕绝不是"顺其自然"就能解决的：\n\n❌ 病毒载量会随时间变化，婚检时的结果不能代表现在\n❌ 不监测=不知道何时需要加用抗病毒药物\n❌ 没有预案的分娩=错过新生儿最佳阻断时机\n\n⚠️ 研究显示，未经规范阻断的乙肝妈妈，新生儿感染率可达90%！而规范阻断后降至5%以下。差距巨大，全在于是否科学干预。',
+            type: 'danger',
+          },
+          nextNodeId: 'f_prenatal_hide',
+          tags: ['hidden', 'passive'],
+        },
+      ],
+    },
+
+    // ========== 孕期产检 - 坦诚路径但伴侣未查 ==========
+    f_prenatal_honest_no_partner_check: {
+      id: 'f_prenatal_honest_no_partner_check',
+      stage: 'prenatal',
+      sceneTitle: '孕期意外',
+      narrative:
+        '你按照医生的建议规范产检，但在孕20周时，阿杰体检发现肝功能异常——他不知道自己什么时候感染了乙肝。\n\n医生说："如果之前阿杰也做了筛查和抗体检查，完全可以避免这种情况。"',
+      choices: [
+        {
+          id: 'f_pn_hnpc_1',
+          text: '赶紧让阿杰也接受规范治疗，重新制定家庭防护方案',
+          isCorrect: true,
+          knowledge: {
+            title: '夫妻同查同治是基本原则',
+            content:
+              '一方查出感染，另一方必须同步筛查：\n\n✅ 阿杰现在开始治疗，可以有效控制病情\n✅ 你继续规范产检和母婴阻断\n✅ 新生儿出生后立即接种乙肝免疫球蛋白+疫苗\n✅ 家庭成员全部做一次乙肝筛查\n\n💡 "早发现早治疗"对谁都适用。虽然晚了，但现在行动仍然有意义。',
+            type: 'correct',
+          },
+          nextNodeId: 'f_prenatal_honest',
+          tags: ['honest', 'partner_treated'],
+        },
+        {
+          id: 'f_pn_hnpc_2',
+          text: '阿杰的事先放一放，重点还是保胎',
+          isCorrect: false,
+          knowledge: {
+            title: '忽视伴侣健康=忽视家庭安全',
+            content:
+              '只关注自己不管伴侣，防线还是有漏洞：\n\n❌ 阿杰不治疗=肝功能持续受损=健康风险加大\n❌ 日常生活中仍有家庭内传播风险\n❌ 孩子出生后，未治疗的父亲也可能构成传播风险\n\n💡 家庭是一个整体，只做"一半防护"不如不做。夫妻同查同治，才能真正守护全家健康。',
+            type: 'warning',
+          },
+          nextNodeId: 'f_prenatal_honest',
+          tags: ['honest', 'partner_ignored'],
         },
       ],
     },
