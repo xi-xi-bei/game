@@ -584,11 +584,11 @@ function EndingScreen() {
             <div className="space-y-3 text-sm leading-relaxed" style={{ color: '#2D3436' }}>
               <div>
                 <p className="font-semibold mb-1" style={{ color: '#E76F51' }}>艾滋病（HIV）</p>
-                <p>不可逆免疫损伤，但规范抗病毒治疗可实现病毒载量清零（U=U：检测不到=不传染），患者可正常生活、工作、婚恋生育，母婴阻断成功率98%以上。72小时内可服用阻断药。</p>
+                <p>不可逆免疫损伤，病毒暴露后72小时内可服用阻断药，阻断成功率高。感染后规范抗病毒治疗可实现病毒载量清零（U=U：检测不到=不传染），患者可正常生活、工作、婚恋生育（配偶知情且合理防护下），母婴阻断成功率98%以上。</p>
               </div>
               <div>
                 <p className="font-semibold mb-1" style={{ color: '#B8860B' }}>梅毒</p>
-                <p>早期规范治疗可100%治愈（青霉素特效），隐匿发病可致脏器、神经损害。夫妻必须同治，避免&ldquo;乒乓感染&rdquo;。</p>
+                <p>早期规范治疗可接近100%治愈（青霉素特效），隐匿发病可致不可逆的脏器、神经损害。夫妻必须同治，避免一人治好一人没治，来回互相传染。</p>
               </div>
               <div>
                 <p className="font-semibold mb-1" style={{ color: '#2A9D8F' }}>乙肝</p>
@@ -601,7 +601,7 @@ function EndingScreen() {
                   <li>&bull; 婚前/备孕免费筛查是家庭第一道保障</li>
                   <li>&bull; 坚决杜绝隐瞒：坦诚+科学=守护家庭的最强力量</li>
                   <li>&bull; 艾滋病感染者依法享有婚育权利，规范治疗可安全婚育</li>
-                  <li>&bull; 高危行为后72小时内可采取紧急阻断措施</li>
+                  <li>&bull; 高危行为后72小时内可采取HIV紧急阻断措施</li>
                 </ul>
               </div>
             </div>
