@@ -150,7 +150,7 @@ function WelcomeScreen() {
           {/* 幸福好孕 Logo */}
           <div className="mb-6">
             <img
-              src="/logo.jpg"
+              src={`${process.env.NODE_ENV === 'production' ? '/game' : ''}/logo.jpg`}
               alt="幸福好孕"
               className="mx-auto w-28 h-28 md:w-32 md:h-32 rounded-2xl shadow-md object-cover"
             />
@@ -635,7 +635,7 @@ function EndingScreen() {
             {/* 八方社工二维码 */}
             <div className="text-center">
               <img
-                src="/qr-bafang.jpg"
+                src={`${process.env.NODE_ENV === 'production' ? '/game' : ''}/qr-bafang.jpg`}
                 alt="八方社工"
                 className="mx-auto w-36 h-36 rounded-xl object-cover"
               />
@@ -649,7 +649,7 @@ function EndingScreen() {
             {/* 72h暴露后预防小程序二维码 */}
             <div className="text-center">
               <img
-                src="/qr-72h.jpg"
+                src={`${process.env.NODE_ENV === 'production' ? '/game' : ''}/qr-72h.jpg`}
                 alt="72h暴露后预防"
                 className="mx-auto w-36 h-36 rounded-xl object-cover"
               />
