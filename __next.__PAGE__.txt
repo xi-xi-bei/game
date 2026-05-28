@@ -1,0 +1,7 @@
+1:"$Sreact.fragment"
+2:I[59092,["/game/_next/static/chunks/9f77d40e50debd27.js"],"GameProvider"]
+3:I[69516,["/game/_next/static/chunks/9f77d40e50debd27.js"],"default"]
+4:I[96118,["/game/_next/static/chunks/7d0f319660058005.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+0:{"buildId":"2zEQlXWN9W32170VhovlB","rsc":["$","$1","c",{"children":[["$","$L2",null,{"children":["$","$L3",null,{}]}],[["$","script","script-0",{"src":"/game/_next/static/chunks/9f77d40e50debd27.js","async":true}]],["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]]}],"loading":null,"isPartial":false}
+6:null
